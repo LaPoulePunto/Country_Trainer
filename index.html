@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Country Trainer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="form-container">
+        <form id="pays_aleatoire">
+            <button Type="submit">Aléatoire</button>
+        </form>
+
+        <form id="paysForm">
+            <label for="pays1">Pays depart:</label>
+            <input type="text" id="pays1" name="pays1" required>
+
+            <label for="pays2">Pays arriver:</label>
+            <input type="text" id="pays2" name="pays2" required>
+
+            <button type="submit">Jouer</button>
+        </form>
+
+        <form>
+            <button id="hard">Mode difficile</button>
+        </form>
+
+        <form id="paysFrontalier">
+            <label for="paysFront">Pays :</label>
+            <input type="text" id="paysFront" required>
+        </form>
+
+        <div id="erreur_pays"></div>
+        <div id="title-container"></div>
+
+    </div>
+    <svg id="map" width="0" height="0"></svg>
+
+<script src="https://d3js.org/d3.v6.min.js"></script>
+<script src="https://d3js.org/topojson.v1.min.js"></script>
+<script src="./interactif.js" defer></script>
+
+
+</body>
