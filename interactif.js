@@ -10,20 +10,33 @@ let formulaireDifficile = document.getElementById('hard');
 let titleContainer = document.getElementById('title-container');
 let erreur_pays = document.getElementById("erreur_pays");
 let pays_aleatoire = document.getElementById("pays_aleatoire");
+let coords= document.getElementById("map");
+let abondonner = document.getElementById("surrend");
+let pays1 = document.getElementById("pays1");
+let pays2 = document.getElementById("pays2");
+
 erreur_pays.style.display='none';
 titleContainer.style.display='none';
 formulairePaysFrontaliers.style.display = 'none';
+
 
 pays_aleatoire.addEventListener("click", AleatoireFonction);
 submit_pays.addEventListener('submit', formPays);
 formulaireDifficile.addEventListener("click", fondBlanc)
 formulairePaysFrontaliers.addEventListener('keypress', paysFrontaliersFunction);
 formulairePaysFrontaliers.addEventListener('submit', paysFrontaliersFunction);
+abondonner.addEventListener("click", abandonnerFunction);
+// pays1.addEventListener("keydown", suggestionFunction);
 
-// Sélection de l'élément SVG existant dans le HTML
+
+
+
 const svg = d3.select('svg')
-    .attr('width', carteX)
-    .attr('height', carteY);
+    .attr('width', carteX/1.6)
+    .attr('height', carteY/1.4)
+    .attr("viewBox", "0 0 "+carteX/1.6+" "+carteY/1.35)
+    // .attr("preserveAspectRatio", "xMidYMid meet");
+
 
 const g = svg.append("g");
 
@@ -43,6 +56,21 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json")
             .attr("d", path);
     });
 
+// function zoomFunction(event) {
+//     const svgElement = document.querySelector('svg');
+//     const point = svgElement.createSVGPoint();
+//     point.x = event.clientX;
+//     point.y = event.clientY;
+//     const svgCoords = point.matrixTransform(svgElement.getScreenCTM().inverse());
+//     console.log();
+//     const coordXm = svgCoords.x-( (carteX/1.6)*0.1 );
+//     const coordYm = svgCoords.y-( (carteY/1.4)*0.1 )*(carteY/carteX);
+//     const coordXp = svgCoords.x+( (carteX/1.6)*0.1 );
+//     const coordYp = svgCoords.y+( (carteY/1.4)*0.1 )*(carteY/carteX);
+//     svgElement.setAttribute("viewBox", `${coordXm} ${coordYm} ${coordXp} ${coordYp}`);
+// }
+
+
 function formPays(event) {
     event.preventDefault();
     pays_depart = document.getElementById('pays1').value.trim();
@@ -51,11 +79,10 @@ function formPays(event) {
         formulairePaysFrontaliers.style.display = 'block';
         pays_references = pays_depart;
 
-        // Mémoriser les couleurs pour chaque pays
         paysColores[pays_depart] = "green";
         paysColores[pays_arriver] = "red";
-
-        // Appliquer les couleurs
+        pays1.disabled = true;
+        pays2.disabled = true;
         g.selectAll("path")
             .style("fill", function (d) {
                 return paysColores[d.properties.name] || "";
@@ -139,11 +166,34 @@ function AleatoireFonction(event) {
     document.getElementById('pays2').value = pays2;
 }
 
+function abandonnerFunction(event) {
+    event.preventDefault();
+    let title = document.createElement('h1');
+    titleContainer.style.display = 'block';
+    title.textContent = 'Vous avez abandonner, une partie se relancera dans 3 secondes !';
+    titleContainer.appendChild(title);
+    setTimeout(function () {
+        window.location.reload();
+    }, 3000);
+}
+
+// function suggestionFunction(event) {
+//     let donnee = pays1.value;
+//
+//     if (donnee) {
+//         let cle_dico = Object.keys(borders);
+//         let suggestion = cle_dico.filter(item => item.name.includes(donnee));
+//
+//         const suggestionElement = helpPays1.createElement('p');
+//         helpPays1.appendChild(suggestionElement);
+//
+//     }
+//
+//
+// }
 
 
-
-
-let borders = {
+const borders = {
     "Afghanistan": ["China", "Iran", "Pakistan", "Tajikistan", "Turkmenistan", "Uzbekistan"],
     "Albania": ["Greece", "Kosovo", "Montenegro", "North Macedonia"],
     "Algeria": ["Libya", "Mali", "Mauritania", "Morocco", "Niger", "Tunisia", "W. Sahara"],

@@ -1,62 +1,84 @@
-/* Global Styles */
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: white;
+/* Reset some default browser styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    margin: 0;
+    font-family: Arial, sans-serif;
 }
 
-.formulaire {
+body {
+    background-color: #f0f0f0;
+}
+
+#form-container {
+    display: flex;
     flex-direction: column;
-}
-
-/* Form Styles */
-form {
-    background-color: #ffffff;
+    align-items: flex-start; /* Aligns forms to the left */
+    justify-content: center; /* Centers forms vertically */
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-    width: 300px;
 }
 
-/* Label Styles */
+form {
+    margin-bottom: 15px;
+}
+
 form label {
     display: block;
-    font-weight: bold;
     margin-bottom: 5px;
 }
 
-/* Input Styles */
-form input[type="text"] {
-    width: calc(100% - 20px);
+form input, form button {
+    margin-bottom: 10px;
     padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ddd;
+    border: 1px solid #ccc;
     border-radius: 5px;
-    box-sizing: border-box;
+    width: 100%;
+    max-width: 300px;
 }
 
-/* Button Styles */
 form button {
-    width: 80%; /* Adjusted width to be smaller than the full width */
-    padding: 8px; /* Reduced padding for smaller height */
-    background-color: #007bff;
+    cursor: pointer;
+    background-color: #4CAF50;
     color: white;
     border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px; /* Slightly smaller font size */
-    transition: background-color 0.3s ease;
-    margin: 0 auto; /* Center align the button */
-    display: block; /* Ensure the button is displayed as a block element */
 }
 
 form button:hover {
-    background-color: #0056b3;
+    background-color: #45a049;
+}
+
+#map {
+    width: 80%; /* Increased width */
+    height: 80%; /* Increased height */
+    border: 1px solid #ccc;
+    margin-left: 40px; /* Increased space between forms and map */
+    /*transform: translate(-25%, -25%);*/
+}
+
+#erreur_pays, #title-container {
+    margin-top: 20px;
+    font-size: 16px;
+    color: red;
+}
+
+@media (max-width: 768px) {
+    #form-container {
+        align-items: center;
+    }
+
+    #map {
+        width: 100%;
+        height: 50%;
+        margin-left: 0;
+        margin-top: 20px;
+    }
+}
+
+svg {
+    background-color: white;
 }
 
 
@@ -72,10 +94,6 @@ form button:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-svg {
-    transform: translate(-23%, -7%);
-
-}
 
 #erreur_pays {
     position: fixed;
@@ -89,6 +107,22 @@ svg {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     color:red;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
