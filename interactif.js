@@ -17,6 +17,7 @@ let pays2 = document.getElementById("pays2");
 let isBlanc = false;
 let joeur = document.getElementById('jouer');
 let desactiver_pays_aleatoire = document.getElementById('desactiver_pays_aleatoire');
+let compteur = 0;
 
 erreur_pays.style.display='none';
 titleContainer.style.display='none';
@@ -110,6 +111,7 @@ function formPays(event) {
 function paysFrontaliersFunction(event) {
     if (event.key === 'Enter') {
         event.preventDefault();
+        compteur+=1;
         formulairePaysFrontaliers.focus();
         let nv_pays = capitalizeFirstLetter(document.getElementById('paysFront').value.trim());
         nv_pays = enToFr(nv_pays);
@@ -129,7 +131,22 @@ function paysFrontaliersFunction(event) {
                 let title = document.createElement('h1');
                 titleContainer.style.display = 'block';
                 let keysPays= Object.keys(borders);
-                title.textContent = 'Vous avez gagné !';
+
+
+                // var graph = new Graph({
+                //     'A': { 'B': 1, 'C': 4 },
+                //     'B': { 'A': 1, 'C': 2, 'D': 5 },
+                //     'C': { 'A': 4, 'B': 2, 'D': 1 },
+                //     'D': { 'B': 5, 'C': 1 }
+                // });
+                //
+                // var chemin = graph.findShortestPath('A', 'D');
+
+
+                let graph = new Graph(matrice);
+                let shortest = graph.findShortestPath(pays_depart, pays_arriver);
+                let coupMin = shortest.length;
+                title.textContent = `Bravo, vous avez gagné en ${compteur} coups , le chemin le plus rapide était en ${coupMin} étapes ! par exemple : ` + shortest.join("->");
                 titleContainer.appendChild(title);
 
             }
@@ -208,10 +225,10 @@ function abandonnerFunction(event) {
     }, 1500);
 }
 
-var Graph = (function (undefined) {
+let Graph = (function () {
 
-    var extractKeys = function (obj) {
-        var keys = [], key;
+    let extractKeys = function (obj) {
+        let keys = [], key;
         for (key in obj) {
             Object.prototype.hasOwnProperty.call(obj,key) && keys.push(key);
         }
@@ -221,20 +238,20 @@ var Graph = (function (undefined) {
     ////////////////////////////////////Code gitHub///////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////
-    var sorter = function (a, b) {
+    let sorter = function (a, b) {
         return parseFloat (a) - parseFloat (b);
     }
 
-    var findPaths = function (map, start, end, infinity) {
+    let findPaths = function (map, start, end, infinity) {
         infinity = infinity || Infinity;
 
-        var costs = {},
+        let costs = {},
             open = {'0': [start]},
             predecessors = {},
             keys;
 
-        var addToOpen = function (cost, vertex) {
-            var key = "" + cost;
+        let addToOpen = function (cost, vertex) {
+            let key = "" + cost;
             if (!open[key]) open[key] = [];
             open[key].push(vertex);
         }
@@ -246,7 +263,7 @@ var Graph = (function (undefined) {
 
             keys.sort(sorter);
 
-            var key = keys[0],
+            let key = keys[0],
                 bucket = open[key],
                 node = bucket.shift(),
                 currentCost = parseFloat(key),
@@ -254,9 +271,9 @@ var Graph = (function (undefined) {
 
             if (!bucket.length) delete open[key];
 
-            for (var vertex in adjacentNodes) {
+            for (let vertex in adjacentNodes) {
                 if (Object.prototype.hasOwnProperty.call(adjacentNodes, vertex)) {
-                    var cost = adjacentNodes[vertex],
+                    let cost = adjacentNodes[vertex],
                         totalCost = cost + currentCost,
                         vertexCost = costs[vertex];
 
@@ -277,8 +294,8 @@ var Graph = (function (undefined) {
 
     }
 
-    var extractShortest = function (predecessors, end) {
-        var nodes = [],
+    let extractShortest = function (predecessors, end) {
+        let nodes = [],
             u = end;
 
         while (u !== undefined) {
@@ -290,8 +307,8 @@ var Graph = (function (undefined) {
         return nodes;
     }
 
-    var findShortestPath = function (map, nodes) {
-        var start = nodes.shift(),
+    let findShortestPath = function (map, nodes) {
+        let start = nodes.shift(),
             end,
             predecessors,
             path = [],
@@ -316,19 +333,19 @@ var Graph = (function (undefined) {
         }
     }
 
-    var toArray = function (list, offset) {
+    let toArray = function (list, offset) {
         try {
             return Array.prototype.slice.call(list, offset);
         } catch (e) {
-            var a = [];
-            for (var i = offset || 0, l = list.length; i < l; ++i) {
+            let a = [];
+            for (let i = offset || 0, l = list.length; i < l; ++i) {
                 a.push(list[i]);
             }
             return a;
         }
     }
 
-    var Graph = function (map) {
+    let Graph = function (map) {
         this.map = map;
     }
 
@@ -359,8 +376,8 @@ var Graph = (function (undefined) {
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/*
-const borders = {
+
+let matrice = {
     "Afghanistan": {
         "China": 1,
         "Iran": 1,
@@ -1301,7 +1318,7 @@ const borders = {
         "Algeria": 1
     }
 };
-*/
+
 
 
 
