@@ -77,10 +77,15 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json")
 
 function formPays(event) {
     event.preventDefault();
+
     pays_depart = document.getElementById('pays1').value.trim();
     pays_arriver = document.getElementById('pays2').value.trim();
-    pays_depart = enToFr(capitalizeFirstLetter(pays_depart));
-    pays_arriver = enToFr(capitalizeFirstLetter(pays_arriver));
+    if (!Object.keys(borders).includes(pays_depart)) {
+        pays_depart = enToFr(capitalizeFirstLetter(pays_depart));
+    }
+    if (!Object.keys(borders).includes(pays_arriver)) {
+        pays_arriver = enToFr(capitalizeFirstLetter(pays_arriver));
+    }
     if (pays_depart in borders && pays_arriver in borders && !borders[pays_depart].includes(pays_arriver)) {
         formulairePaysFrontaliers.style.display = 'block';
         pays_references = pays_depart;
@@ -113,9 +118,13 @@ function paysFrontaliersFunction(event) {
         event.preventDefault();
         compteur+=1;
         formulairePaysFrontaliers.focus();
-        let nv_pays = capitalizeFirstLetter(document.getElementById('paysFront').value.trim());
-        nv_pays = enToFr(nv_pays);
+        let nv_pays = document.getElementById('paysFront').value.trim();
 
+        if (!Object.keys(borders).includes(nv_pays)){
+            nv_pays = capitalizeFirstLetter(nv_pays);
+        }
+
+        nv_pays = enToFr(nv_pays);
         formulairePaysFrontaliers.reset();
 
         if (borders[pays_references].includes(nv_pays)) {
@@ -145,7 +154,7 @@ function paysFrontaliersFunction(event) {
 
                 let graph = new Graph(matrice);
                 let shortest = graph.findShortestPath(pays_depart, pays_arriver);
-                let coupMin = shortest.length;
+                let coupMin = shortest.length-2;
                 title.textContent = `Bravo, vous avez gagné en ${compteur} coups , le chemin le plus rapide était en ${coupMin} étapes ! par exemple : ` + shortest.join("->");
                 titleContainer.appendChild(title);
 
@@ -401,14 +410,10 @@ let matrice = {
         "Tunisia": 1,
         "W. Sahara": 1
     },
-    "Andorra": {
-        "France": 1,
-        "Spain": 1
-    },
     "Angola": {
         "Dem. Rep. Congo": 1,
         "Namibia": 1,
-        "Republic of the Congo": 1,
+        "Congo": 1,
         "Zambia": 1
     },
     "Argentina": {
@@ -429,7 +434,6 @@ let matrice = {
         "Germany": 1,
         "Hungary": 1,
         "Italy": 1,
-        "Liechtenstein": 1,
         "Slovakia": 1,
         "Slovenia": 1,
         "Switzerland": 1
@@ -479,7 +483,7 @@ let matrice = {
         "Paraguay": 1,
         "Peru": 1
     },
-    "Bosnia and Herzegovina": {
+    "Bosnia and Herz.": {
         "Croatia": 1,
         "Montenegro": 1,
         "Serbia": 1
@@ -532,27 +536,27 @@ let matrice = {
         "Vietnam": 1
     },
     "Cameroon": {
-        "Central African Republic": 1,
+        "cacan Republic": 1,
         "Chad": 1,
-        "Republic of the Congo": 1,
+        "Congo": 1,
         "Equatorial Guinea": 1,
         "Gabon": 1,
         "Nigeria": 1
     },
     "Canada": {
-        "United States": 1
+        "United States of America": 1
     },
-    "Central African Republic": {
+    "Central African Rep.": {
         "Cameroon": 1,
         "Chad": 1,
         "Dem. Rep. Congo": 1,
-        "Republic of the Congo": 1,
-        "South Sudan": 1,
+        "Congo": 1,
+        "S. Sudan": 1,
         "Sudan": 1
     },
     "Chad": {
         "Cameroon": 1,
-        "Central African Republic": 1,
+        "Central African Rep.": 1,
         "Libya": 1,
         "Niger": 1,
         "Nigeria": 1,
@@ -589,18 +593,18 @@ let matrice = {
     "Dem. Rep. Congo": {
         "Angola": 1,
         "Burundi": 1,
-        "Central African Republic": 1,
-        "Republic of the Congo": 1,
+        "Central African Rep.": 1,
+        "Congo": 1,
         "Rwanda": 1,
-        "South Sudan": 1,
+        "S. Sudan": 1,
         "Tanzania": 1,
         "Uganda": 1,
         "Zambia": 1
     },
-    "Congo (Republic of the)": {
+    "Congo": {
         "Angola": 1,
         "Cameroon": 1,
-        "Central African Republic": 1,
+        "Central African Rep.": 1,
         "Dem. Rep. Congo": 1,
         "Gabon": 1
     },
@@ -609,7 +613,7 @@ let matrice = {
         "Panama": 1
     },
     "Croatia": {
-        "Bosnia and Herzegovina": 1,
+        "Bosnia and Herz.": 1,
         "Hungary": 1,
         "Montenegro": 1,
         "Serbia": 1,
@@ -628,9 +632,6 @@ let matrice = {
         "Eritrea": 1,
         "Ethiopia": 1,
         "Somalia": 1
-    },
-    "Dominican Republic": {
-        "Haiti": 1
     },
     "East Timor": {
         "Indonesia": 1
@@ -661,7 +662,7 @@ let matrice = {
         "Latvia": 1,
         "Russia": 1
     },
-    "Eswatini": {
+    "eSwatini": {
         "Mozambique": 1,
         "South Africa": 1
     },
@@ -670,7 +671,7 @@ let matrice = {
         "Eritrea": 1,
         "Kenya": 1,
         "Somalia": 1,
-        "South Sudan": 1,
+        "S. Sudan": 1,
         "Sudan": 1
     },
     "Finland": {
@@ -680,7 +681,6 @@ let matrice = {
     },
     "France": {
         "Suriname": 1,
-        "Andorra": 1,
         "Belgium": 1,
         "Germany": 1,
         "Italy": 1,
@@ -693,7 +693,7 @@ let matrice = {
     "Gabon": {
         "Cameroon": 1,
         "Equatorial Guinea": 1,
-        "Republic of the Congo": 1
+        "Congo": 1
     },
     "Gambia": {
         "Senegal": 1
@@ -749,9 +749,6 @@ let matrice = {
         "Suriname": 1,
         "Venezuela": 1
     },
-    "Haiti": {
-        "Dominican Republic": 1
-    },
     "Honduras": {
         "El Salvador": 1,
         "Guatemala": 1,
@@ -796,9 +793,6 @@ let matrice = {
         "Syria": 1,
         "Turkey": 1
     },
-    "Ireland": {
-        "United Kingdom": 1
-    },
     "Israel": {
         "Egypt": 1,
         "Jordan": 1,
@@ -811,7 +805,6 @@ let matrice = {
         "San Marino": 1,
         "Slovenia": 1,
         "Switzerland": 1,
-        "Vatican": 1
     },
     "Jordan": {
         "Iraq": 1,
@@ -829,7 +822,7 @@ let matrice = {
     "Kenya": {
         "Ethiopia": 1,
         "Somalia": 1,
-        "South Sudan": 1,
+        "S. Sudan": 1,
         "Tanzania": 1,
         "Uganda": 1
     },
@@ -876,10 +869,6 @@ let matrice = {
         "Sudan": 1,
         "Tunisia": 1
     },
-    "Liechtenstein": {
-        "Austria": 1,
-        "Switzerland": 1
-    },
     "Lithuania": {
         "Belarus": 1,
         "Latvia": 1,
@@ -919,7 +908,7 @@ let matrice = {
     "Mexico": {
         "Belize": 1,
         "Guatemala": 1,
-        "United States": 1
+        "United States of America": 1
     },
     "Moldova": {
         "Romania": 1,
@@ -934,7 +923,7 @@ let matrice = {
     },
     "Montenegro": {
         "Albania": 1,
-        "Bosnia and Herzegovina": 1,
+        "Bosnia and Herz.": 1,
         "Croatia": 1,
         "Kosovo": 1,
         "Serbia": 1
@@ -944,7 +933,7 @@ let matrice = {
         "W. Sahara": 1
     },
     "Mozambique": {
-        "Eswatini": 1,
+        "eSwatini": 1,
         "Malawi": 1,
         "South Africa": 1,
         "Tanzania": 1,
@@ -1106,7 +1095,7 @@ let matrice = {
         "Mauritania": 1
     },
     "Serbia": {
-        "Bosnia and Herzegovina": 1,
+        "Bosnia and Herz.": 1,
         "Bulgaria": 1,
         "Croatia": 1,
         "Hungary": 1,
@@ -1139,7 +1128,7 @@ let matrice = {
     },
     "South Africa": {
         "Botswana": 1,
-        "Eswatini": 1,
+        "eSwatini": 1,
         "Lesotho": 1,
         "Mozambique": 1,
         "Namibia": 1,
@@ -1148,8 +1137,8 @@ let matrice = {
     "South Korea": {
         "North Korea": 1
     },
-    "South Sudan": {
-        "Central African Republic": 1,
+    "S. Sudan": {
+        "Central African Rep.": 1,
         "Dem. Rep. Congo": 1,
         "Ethiopia": 1,
         "Kenya": 1,
@@ -1157,19 +1146,18 @@ let matrice = {
         "Uganda": 1
     },
     "Spain": {
-        "Andorra": 1,
         "France": 1,
         "Gibraltar": 1,
         "Portugal": 1
     },
     "Sudan": {
-        "Central African Republic": 1,
+        "Central African Rep.": 1,
         "Chad": 1,
         "Egypt": 1,
         "Eritrea": 1,
         "Ethiopia": 1,
         "Libya": 1,
-        "South Sudan": 1
+        "S. Sudan": 1
     },
     "Suriname": {
         "Brazil": 1,
@@ -1185,7 +1173,6 @@ let matrice = {
         "France": 1,
         "Germany": 1,
         "Italy": 1,
-        "Liechtenstein": 1
     },
     "Syria": {
         "Iraq": 1,
@@ -1245,7 +1232,7 @@ let matrice = {
         "Dem. Rep. Congo": 1,
         "Kenya": 1,
         "Rwanda": 1,
-        "South Sudan": 1,
+        "S. Sudan": 1,
         "Tanzania": 1
     },
     "Ukraine": {
@@ -1261,10 +1248,7 @@ let matrice = {
         "Oman": 1,
         "Saudi Arabia": 1
     },
-    "United Kingdom": {
-        "Ireland": 1
-    },
-    "United States": {
+    "United States of America": {
         "Canada": 1,
         "Mexico": 1
     },
@@ -1278,9 +1262,6 @@ let matrice = {
         "Kyrgyzstan": 1,
         "Tajikistan": 1,
         "Turkmenistan": 1
-    },
-    "Vatican": {
-        "Italy": 1
     },
     "Venezuela": {
         "Brazil": 1,
@@ -1326,10 +1307,10 @@ const borders = {
     "Afghanistan": ["China", "Iran", "Pakistan", "Tajikistan", "Turkmenistan", "Uzbekistan"],
     "Albania": ["Greece", "Kosovo", "Montenegro", "North Macedonia"],
     "Algeria": ["Libya", "Mali", "Mauritania", "Morocco", "Niger", "Tunisia", "W. Sahara"],
-    "Angola": ["Dem. Rep. Congo", "Namibia", "Republic of the Congo", "Zambia"],
+    "Angola": ["Dem. Rep. Congo", "Namibia", "Congo", "Zambia"],
     "Argentina": ["Bolivia", "Brazil", "Chile", "Paraguay", "Uruguay"],
     "Armenia": ["Azerbaijan", "Georgia", "Iran", "Turkey"],
-    "Austria": ["Czech Republic", "Germany", "Hungary", "Italy", "Liechtenstein", "Slovakia", "Slovenia", "Switzerland"],
+    "Austria": ["Czech Republic", "Germany", "Hungary", "Italy", "Slovakia", "Slovenia", "Switzerland"],
     "Azerbaijan": ["Armenia", "Georgia", "Iran", "Russia", "Turkey"],
     "Bangladesh": ["India", "Myanmar"],
     "Belarus": ["Latvia", "Lithuania", "Poland", "Russia", "Ukraine"],
@@ -1338,7 +1319,7 @@ const borders = {
     "Benin": ["Burkina Faso", "Niger", "Nigeria", "Togo"],
     "Bhutan": ["China", "India"],
     "Bolivia": ["Argentina", "Brazil", "Chile", "Paraguay", "Peru"],
-    "Bosnia and Herzegovina": ["Croatia", "Montenegro", "Serbia"],
+    "Bosnia and Herz.": ["Croatia", "Montenegro", "Serbia"],
     "Botswana": ["Namibia", "South Africa", "Zambia", "Zimbabwe"],
     "Brazil": ["France", "Argentina", "Bolivia", "Colombia", "Guyana", "Paraguay", "Peru", "Suriname", "Uruguay", "Venezuela", "France (French Guiana)"],
     "Brunei": ["Malaysia"],
@@ -1346,21 +1327,20 @@ const borders = {
     "Burkina Faso": ["Benin", "Côte d'Ivoire", "Ghana", "Mali", "Niger", "Togo"],
     "Burundi": ["Dem. Rep. Congo", "Rwanda", "Tanzania"],
     "Cambodia": ["Laos", "Thailand", "Vietnam"],
-    "Cameroon": ["Central African Republic", "Chad", "Republic of the Congo", "Equatorial Guinea", "Gabon", "Nigeria"],
-    "Canada": ["United States"],
-    "Central African Rep.": ["Cameroon", "Chad", "Dem. Rep. Congo", "Republic of the Congo", "South Sudan", "Sudan"],
-    "Chad": ["Cameroon", "Central African Republic", "Libya", "Niger", "Nigeria", "Sudan"],
+    "Cameroon": ["Central African Rep.", "Chad", "Congo", "Equatorial Guinea", "Gabon", "Nigeria"],
+    "Canada": ["United States of America"],
+    "Central African Rep.": ["Cameroon", "Chad", "Dem. Rep. Congo", "Congo", "S. Sudan", "Sudan"],
+    "Chad": ["Cameroon", "Central African Rep.", "Libya", "Niger", "Nigeria", "Sudan"],
     "Chile": ["Argentina", "Bolivia", "Peru"],
     "China": ["Afghanistan", "Bhutan", "India", "Kazakhstan", "Kyrgyzstan", "Laos", "Mongolia", "Myanmar", "Nepal", "North Korea", "Pakistan", "Russia", "Tajikistan", "Vietnam"],
     "Colombia": ["Brazil", "Ecuador", "Panama", "Peru", "Venezuela"],
-    "Dem. Rep. Congo": ["Angola", "Burundi", "Central African Republic", "Republic of the Congo", "Rwanda", "South Sudan", "Tanzania", "Uganda", "Zambia"],
-    "Congo": ["Angola", "Cameroon", "Central African Republic", "Dem. Rep. Congo", "Gabon"],
+    "Dem. Rep. Congo": ["Angola", "Burundi", "Central African Rep.", "Congo", "Rwanda", "S. Sudan", "Tanzania", "Uganda", "Zambia"],
+    "Congo": ["Angola", "Cameroon", "Central African Rep.", "Dem. Rep. Congo", "Gabon"],
     "Costa Rica": ["Nicaragua", "Panama"],
-    "Croatia": ["Bosnia and Herzegovina", "Hungary", "Montenegro", "Serbia", "Slovenia"],
+    "Croatia": ["Bosnia and Herz.", "Hungary", "Montenegro", "Serbia", "Slovenia"],
     "Czech Republic": ["Austria", "Germany", "Poland", "Slovakia"],
     "Denmark": ["Germany"],
     "Djibouti": ["Eritrea", "Ethiopia", "Somalia"],
-    "Dominican Republic": ["Haiti"],
     "East Timor": ["Indonesia"],
     "Ecuador": ["Colombia", "Peru"],
     "Egypt": ["Israel", "Libya", "Sudan"],
@@ -1368,11 +1348,11 @@ const borders = {
     "Equatorial Guinea": ["Cameroon", "Gabon"],
     "Eritrea": ["Djibouti", "Ethiopia", "Sudan"],
     "Estonia": ["Latvia", "Russia"],
-    "Eswatini": ["Mozambique", "South Africa"],
-    "Ethiopia": ["Djibouti", "Eritrea", "Kenya", "Somalia", "South Sudan", "Sudan"],
+    "eSwatini": ["Mozambique", "South Africa"],
+    "Ethiopia": ["Djibouti", "Eritrea", "Kenya", "Somalia", "S. Sudan", "Sudan"],
     "Finland": ["Norway", "Russia", "Sweden"],
-    "France": ["Suriname", "Andorra", "Belgium", "Germany", "Italy", "Luxembourg", "Monaco", "Spain", "Switzerland", "Brazil"],
-    "Gabon": ["Cameroon", "Equatorial Guinea", "Republic of the Congo"],
+    "France": ["Suriname", "Belgium", "Germany", "Italy", "Luxembourg", "Monaco", "Spain", "Switzerland", "Brazil"],
+    "Gabon": ["Cameroon", "Equatorial Guinea", "Congo"],
     "Gambia": ["Senegal"],
     "Georgia": ["Armenia", "Azerbaijan", "Russia", "Turkey"],
     "Germany": ["Austria", "Belgium", "Czech Republic", "Denmark", "France", "Luxembourg", "Netherlands", "Poland", "Switzerland"],
@@ -1382,19 +1362,17 @@ const borders = {
     "Guinea": ["Côte d'Ivoire", "Guinea-Bissau", "Liberia", "Mali", "Senegal", "Sierra Leone"],
     "Guinea-Bissau": ["Guinea", "Senegal"],
     "Guyana": ["Brazil", "Suriname", "Venezuela"],
-//    "Haiti": ["Dominican Republic"],
     "Honduras": ["El Salvador", "Guatemala", "Nicaragua"],
     "Hungary": ["Austria", "Croatia", "Romania", "Serbia", "Slovakia", "Slovenia", "Ukraine"],
     "India": ["Bangladesh", "Bhutan", "China", "Myanmar", "Nepal", "Pakistan"],
     "Indonesia": ["East Timor", "Malaysia", "Papua New Guinea"],
     "Iran": ["Afghanistan", "Armenia", "Azerbaijan", "Iraq", "Pakistan", "Turkey", "Turkmenistan"],
     "Iraq": ["Iran", "Jordan", "Kuwait", "Saudi Arabia", "Syria", "Turkey"],
-    "Ireland": ["United Kingdom"],
     "Israel": ["Egypt", "Jordan", "Lebanon", "Syria"],
-    "Italy": ["Austria", "France", "San Marino", "Slovenia", "Switzerland", "Vatican"],
+    "Italy": ["Austria", "France", "San Marino", "Slovenia", "Switzerland"],
     "Jordan": ["Iraq", "Israel", "Saudi Arabia", "Syria"],
     "Kazakhstan": ["China", "Kyrgyzstan", "Russia", "Turkmenistan", "Uzbekistan"],
-    "Kenya": ["Ethiopia", "Somalia", "South Sudan", "Tanzania", "Uganda"],
+    "Kenya": ["Ethiopia", "Somalia", "S. Sudan", "Tanzania", "Uganda"],
     "Kuwait": ["Iraq", "Saudi Arabia"],
     "Kyrgyzstan": ["China", "Kazakhstan", "Tajikistan", "Uzbekistan"],
     "Laos": ["Cambodia", "China", "Myanmar", "Thailand", "Vietnam"],
@@ -1403,19 +1381,19 @@ const borders = {
     "Lesotho": ["South Africa"],
     "Liberia": ["Côte d'Ivoire", "Guinea", "Sierra Leone"],
     "Libya": ["Algeria", "Chad", "Egypt", "Niger", "Sudan", "Tunisia"],
-    "Liechtenstein": ["Austria", "Switzerland"],
     "Lithuania": ["Belarus", "Latvia", "Poland", "Russia"],
     "Luxembourg": ["Belgium", "France", "Germany"],
     "Malawi": ["Mozambique", "Tanzania", "Zambia"],
     "Malaysia": ["Brunei", "Indonesia", "Thailand"],
     "Mali": ["Algeria", "Burkina Faso", "Guinea", "Ivory Coast", "Mauritania", "Niger", "Senegal"],
     "Mauritania": ["Algeria", "Mali", "Senegal", "W. Sahara"],
-    "Mexico": ["Belize", "Guatemala", "United States"],
+    "Mexico": ["Belize", "Guatemala", "United States of America"],
     "Moldova": ["Romania", "Ukraine"],
+    "Monaco": ["France"],
     "Mongolia": ["China", "Russia"],
-    "Montenegro": ["Albania", "Bosnia and Herzegovina", "Croatia", "Kosovo", "Serbia"],
+    "Montenegro": ["Albania", "Bosnia and Herz.", "Croatia", "Kosovo", "Serbia"],
     "Morocco": ["Algeria", "W. Sahara"],
-    "Mozambique": ["Eswatini", "Malawi", "South Africa", "Tanzania", "Zambia", "Zimbabwe"],
+    "Mozambique": ["eSwatini", "Malawi", "South Africa", "Tanzania", "Zambia", "Zimbabwe"],
     "Myanmar": ["Bangladesh", "China", "India", "Laos", "Thailand"],
     "Namibia": ["Angola", "Botswana", "South Africa", "Zambia"],
     "Nepal": ["China", "India"],
@@ -1442,19 +1420,19 @@ const borders = {
     "San Marino": ["Italy"],
     "Saudi Arabia": ["Iraq", "Jordan", "Kuwait", "Oman", "Qatar", "United Arab Emirates", "Yemen"],
     "Senegal": ["Gambia", "Guinea", "Guinea-Bissau", "Mali", "Mauritania"],
-    "Serbia": ["Bosnia and Herzegovina", "Bulgaria", "Croatia", "Hungary", "Kosovo", "Montenegro", "North Macedonia", "Romania"],
+    "Serbia": ["Bosnia and Herz.", "Bulgaria", "Croatia", "Hungary", "Kosovo", "Montenegro", "North Macedonia", "Romania"],
     "Sierra Leone": ["Guinea", "Liberia"],
     "Slovakia": ["Austria", "Czech Republic", "Hungary", "Poland", "Ukraine"],
     "Slovenia": ["Austria", "Croatia", "Hungary", "Italy"],
     "Somalia": ["Djibouti", "Ethiopia", "Kenya"],
-    "South Africa": ["Botswana", "Eswatini", "Lesotho", "Mozambique", "Namibia", "Zimbabwe"],
+    "South Africa": ["Botswana", "eSwatini", "Lesotho", "Mozambique", "Namibia", "Zimbabwe"],
     "South Korea": ["North Korea"],
-    "South Sudan": ["Central African Republic", "Dem. Rep. Congo", "Ethiopia", "Kenya", "Sudan", "Uganda"],
-    "Spain": ["Andorra", "France", "Gibraltar", "Portugal"],
-    "Sudan": ["Central African Republic", "Chad", "Egypt", "Eritrea", "Ethiopia", "Libya", "South Sudan"],
+    "S. Sudan": ["Central African Rep.", "Dem. Rep. Congo", "Ethiopia", "Kenya", "Sudan", "Uganda"],
+    "Spain": ["France", "Gibraltar", "Portugal"],
+    "Sudan": ["Central African Rep.Central African Rep.", "Chad", "Egypt", "Eritrea", "Ethiopia", "Libya", "S. Sudan"],
     "Suriname": ["Brazil", "French Guiana", "Guyana"],
     "Sweden": ["Finland", "Norway"],
-    "Switzerland": ["Austria", "France", "Germany", "Italy", "Liechtenstein"],
+    "Switzerland": ["Austria", "France", "Germany", "Italy"],
     "Syria": ["Iraq", "Israel", "Jordan", "Lebanon", "Turkey"],
     "Tajikistan": ["Afghanistan", "China", "Kyrgyzstan", "Uzbekistan"],
     "Tanzania": ["Burundi", "Dem. Rep. Congo", "Kenya", "Malawi", "Mozambique", "Rwanda", "Uganda", "Zambia"],
@@ -1463,7 +1441,7 @@ const borders = {
     "Tunisia": ["Algeria", "Libya"],
     "Turkey": ["Armenia", "Azerbaijan", "Bulgaria", "Georgia", "Greece", "Iran", "Iraq", "Syria"],
     "Turkmenistan": ["Afghanistan", "Iran", "Kazakhstan", "Uzbekistan"],
-    "Uganda": ["Dem. Rep. Congo", "Kenya", "Rwanda", "South Sudan", "Tanzania"],
+    "Uganda": ["Dem. Rep. Congo", "Kenya", "Rwanda", "S. Sudan", "Tanzania"],
     "Ukraine": ["Belarus", "Hungary", "Moldova", "Poland", "Romania", "Russia", "Slovakia"],
     "United Arab Emirates": ["Oman", "Saudi Arabia"],
     "United States of America": ["Canada", "Mexico"],
@@ -1517,11 +1495,10 @@ const paysFr= [
     "Republique tcheque",
     "Danemark",
     "Djibouti",
-    "Republique dominicaine",
     "Timor oriental",
     "Equateur",
     "Egypte",
-    "Salvador",
+    "El salvador",
     "Guinee equatoriale",
     "erythree",
     "Estonie",
@@ -1539,14 +1516,12 @@ const paysFr= [
     "Guinee",
     "Guinee-Bissau",
     "Guyana",
-    "Haiti",
     "Honduras",
     "Hongrie",
     "Inde",
     "Indonesie",
     "Iran",
     "Irak",
-    "Irlande",
     "Israel",
     "Italie",
     "Jordanie",
@@ -1560,7 +1535,6 @@ const paysFr= [
     "Lesotho",
     "Liberia",
     "Libye",
-    "Liechtenstein",
     "Lituanie",
     "Luxembourg",
     "Malawi",
@@ -1569,6 +1543,7 @@ const paysFr= [
     "Mauritanie",
     "Mexique",
     "Moldavie",
+    "Monaco",
     "Mongolie",
     "Montenegro",
     "Maroc",
@@ -1579,9 +1554,9 @@ const paysFr= [
     "Pays-Bas",
     "Nicaragua",
     "Niger",
-    "Nigéria",
+    "Nigeria",
     "Coree du nord",
-    "Macédoine du nord",
+    "Macedoine du nord",
     "Norvege",
     "Oman",
     "Pakistan",
@@ -1589,7 +1564,7 @@ const paysFr= [
     "Panama",
     "Papouasie-nouvelle-Guinee",
     "Paraguay",
-    "Pérou",
+    "Perou",
     "Pologne",
     "Portugal",
     "Qatar",
