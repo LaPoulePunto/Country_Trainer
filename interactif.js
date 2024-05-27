@@ -132,6 +132,7 @@ function formPays(event) {
 }
 
 function paysFrontaliersFunction(event) {
+    console.log(Object.values("S. Sudan"))
     if (event.key === 'Enter') {
         event.preventDefault();
         compteur+=1;
@@ -448,7 +449,7 @@ let matrice = {
         "Turkey": 1
     },
     "Austria": {
-        "Czech Republic": 1,
+        "Czechia": 1,
         "Germany": 1,
         "Hungary": 1,
         "Italy": 1,
@@ -637,7 +638,7 @@ let matrice = {
         "Serbia": 1,
         "Slovenia": 1
     },
-    "Czech Republic": {
+    "Czechia": {
         "Austria": 1,
         "Germany": 1,
         "Poland": 1,
@@ -725,7 +726,7 @@ let matrice = {
     "Germany": {
         "Austria": 1,
         "Belgium": 1,
-        "Czech Republic": 1,
+        "Czechia": 1,
         "Denmark": 1,
         "France": 1,
         "Luxembourg": 1,
@@ -1051,7 +1052,7 @@ let matrice = {
     },
     "Poland": {
         "Belarus": 1,
-        "Czech Republic": 1,
+        "Czechia": 1,
         "Germany": 1,
         "Lithuania": 1,
         "Russia": 1,
@@ -1128,7 +1129,7 @@ let matrice = {
     },
     "Slovakia": {
         "Austria": 1,
-        "Czech Republic": 1,
+        "Czechia": 1,
         "Hungary": 1,
         "Poland": 1,
         "Ukraine": 1
@@ -1328,7 +1329,7 @@ const borders = {
     "Angola": ["Dem. Rep. Congo", "Namibia", "Congo", "Zambia"],
     "Argentina": ["Bolivia", "Brazil", "Chile", "Paraguay", "Uruguay"],
     "Armenia": ["Azerbaijan", "Georgia", "Iran", "Turkey"],
-    "Austria": ["Czech Republic", "Germany", "Hungary", "Italy", "Slovakia", "Slovenia", "Switzerland"],
+    "Austria": ["Czechia", "Germany", "Hungary", "Italy", "Slovakia", "Slovenia", "Switzerland"],
     "Azerbaijan": ["Armenia", "Georgia", "Iran", "Russia", "Turkey"],
     "Bangladesh": ["India", "Myanmar"],
     "Belarus": ["Latvia", "Lithuania", "Poland", "Russia", "Ukraine"],
@@ -1356,7 +1357,7 @@ const borders = {
     "Congo": ["Angola", "Cameroon", "Central African Rep.", "Dem. Rep. Congo", "Gabon"],
     "Costa Rica": ["Nicaragua", "Panama"],
     "Croatia": ["Bosnia and Herz.", "Hungary", "Montenegro", "Serbia", "Slovenia"],
-    "Czech Republic": ["Austria", "Germany", "Poland", "Slovakia"],
+    "Czechia": ["Austria", "Germany", "Poland", "Slovakia"],
     "Denmark": ["Germany"],
     "Djibouti": ["Eritrea", "Ethiopia", "Somalia"],
     "East Timor": ["Indonesia"],
@@ -1373,7 +1374,7 @@ const borders = {
     "Gabon": ["Cameroon", "Equatorial Guinea", "Congo"],
     "Gambia": ["Senegal"],
     "Georgia": ["Armenia", "Azerbaijan", "Russia", "Turkey"],
-    "Germany": ["Austria", "Belgium", "Czech Republic", "Denmark", "France", "Luxembourg", "Netherlands", "Poland", "Switzerland"],
+    "Germany": ["Austria", "Belgium", "Czechia", "Denmark", "France", "Luxembourg", "Netherlands", "Poland", "Switzerland"],
     "Ghana": ["Burkina Faso", "Côte d'Ivoire", "Togo"],
     "Greece": ["Albania", "Bulgaria", "North Macedonia", "Turkey"],
     "Guatemala": ["Belize", "El Salvador", "Honduras", "Mexico"],
@@ -1429,7 +1430,7 @@ const borders = {
     "Papua New Guinea": ["Indonesia"],
     "Paraguay": ["Argentina", "Bolivia", "Brazil"],
     "Peru": ["Bolivia", "Brazil", "Chile", "Colombia", "Ecuador"],
-    "Poland": ["Belarus", "Czech Republic", "Germany", "Lithuania", "Russia", "Slovakia", "Ukraine"],
+    "Poland": ["Belarus", "Czechia", "Germany", "Lithuania", "Russia", "Slovakia", "Ukraine"],
     "Portugal": ["Spain"],
     "Qatar": ["Saudi Arabia"],
     "Romania": ["Bulgaria", "Hungary", "Moldova", "Serbia", "Ukraine"],
@@ -1440,7 +1441,7 @@ const borders = {
     "Senegal": ["Gambia", "Guinea", "Guinea-Bissau", "Mali", "Mauritania"],
     "Serbia": ["Bosnia and Herz.", "Bulgaria", "Croatia", "Hungary", "Kosovo", "Montenegro", "North Macedonia", "Romania"],
     "Sierra Leone": ["Guinea", "Liberia"],
-    "Slovakia": ["Austria", "Czech Republic", "Hungary", "Poland", "Ukraine"],
+    "Slovakia": ["Austria", "Czechia", "Hungary", "Poland", "Ukraine"],
     "Slovenia": ["Austria", "Croatia", "Hungary", "Italy"],
     "Somalia": ["Djibouti", "Ethiopia", "Kenya"],
     "South Africa": ["Botswana", "eSwatini", "Lesotho", "Mozambique", "Namibia", "Zimbabwe"],
@@ -1506,7 +1507,7 @@ const paysFr= [
     "Chili",
     "Chine",
     "Colombie",
-    "Republique democratique du Congo",
+    "Republique democratique du congo",
     "Congo",
     "Costa rica",
     "Croatie",
