@@ -39,10 +39,16 @@ const svg = d3.select('svg')
     .attr('width', carteX/1.6)
     .attr('height', carteY/1.4)
     .attr("viewBox", "0 0 "+carteX/1.6+" "+carteY/1.35)
-    // .attr("preserveAspectRatio", "xMidYMid meet");
+    .call(d3.zoom().on("zoom", function(event) {
+        // Sélectionne le groupe à l'intérieur du SVG
 
+
+        // Applique la transformation de zoom/déplacement
+        g.attr("transform", event.transform);
+    }));
 
 const g = svg.append("g");
+
 
 const projection = d3.geoMercator()
     .scale(140)
@@ -73,6 +79,18 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json")
 //     const coordYp = svgCoords.y+( (carteY/1.4)*0.1 )*(carteY/carteX);
 //     svgElement.setAttribute("viewBox", `${coordXm} ${coordYm} ${coordXp} ${coordYp}`);
 // }
+
+function zoomed({transform}) {
+    const zx = transform.rescaleX(x).interpolate(d3.interpolateRound);
+    const zy = transform.rescaleY(y).interpolate(d3.interpolateRound);
+    gDot.attr("transform", transform).attr("stroke-width", 5 / transform.k);
+    gx.call(xAxis, zx);
+    gy.call(yAxis, zy);
+    gGrid.call(grid, zx, zy);
+  }
+
+
+
 
 
 function formPays(event) {
