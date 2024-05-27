@@ -10,7 +10,7 @@ let formulaireDifficile = document.getElementById('hard');
 let titleContainer = document.getElementById('title-container');
 let erreur_pays = document.getElementById("erreur_pays");
 let pays_aleatoire = document.getElementById("pays_aleatoire");
-let coords= document.getElementById("map");
+let coords = document.getElementById("map");
 let abondonner = document.getElementById("surrend");
 let pays1 = document.getElementById("pays1");
 let pays2 = document.getElementById("pays2");
@@ -18,9 +18,10 @@ let isBlanc = false;
 let joeur = document.getElementById('jouer');
 let desactiver_pays_aleatoire = document.getElementById('desactiver_pays_aleatoire');
 let compteur = 0;
+let disparitre = document.getElementsByClassName('disparaitre');
 
-erreur_pays.style.display='none';
-titleContainer.style.display='none';
+erreur_pays.style.display = 'none';
+titleContainer.style.display = 'none';
 formulairePaysFrontaliers.style.display = 'none';
 
 
@@ -36,10 +37,10 @@ abondonner.addEventListener("click", abandonnerFunction);
 
 
 const svg = d3.select('svg')
-    .attr('width', carteX/1.6)
-    .attr('height', carteY/1.4)
-    .attr("viewBox", "0 0 "+carteX/1.6+" "+carteY/1.35)
-    .call(d3.zoom().on("zoom", function(event) {
+    .attr('width', carteX / 1.6)
+    .attr('height', carteY / 1.4)
+    .attr("viewBox", "0 0 " + carteX / 1.6 + " " + carteY / 1.35)
+    .call(d3.zoom().on("zoom", function (event) {
         // Sélectionne le groupe à l'intérieur du SVG
 
 
@@ -80,14 +81,14 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json")
 //     svgElement.setAttribute("viewBox", `${coordXm} ${coordYm} ${coordXp} ${coordYp}`);
 // }
 
-function zoomed({transform}) {
+function zoomed({ transform }) {
     const zx = transform.rescaleX(x).interpolate(d3.interpolateRound);
     const zy = transform.rescaleY(y).interpolate(d3.interpolateRound);
     gDot.attr("transform", transform).attr("stroke-width", 5 / transform.k);
     gx.call(xAxis, zx);
     gy.call(yAxis, zy);
     gGrid.call(grid, zx, zy);
-  }
+}
 
 
 
@@ -95,6 +96,11 @@ function zoomed({transform}) {
 
 function formPays(event) {
     event.preventDefault();
+
+    if ((carteX / carteY) < 1.3) {
+        paysForm.style.display = 'none';
+        pays_aleatoire.style.display = 'none';
+    }
 
     pays_depart = document.getElementById('pays1').value.trim();
     pays_arriver = document.getElementById('pays2').value.trim();
@@ -112,8 +118,8 @@ function formPays(event) {
         paysColores[pays_arriver] = "red";
         pays1.disabled = true;
         pays2.disabled = true;
-        joeur.disabled=true;
-        desactiver_pays_aleatoire.disabled=true;
+        joeur.disabled = true;
+        desactiver_pays_aleatoire.disabled = true;
         g.selectAll("path")
             .style("fill", function (d) {
                 return paysColores[d.properties.name] || "";
@@ -126,7 +132,7 @@ function formPays(event) {
         erreur_pays.appendChild(title);
         setTimeout(function () {
             erreur_pays.style.display = 'none';
-            erreur_pays.innerHTML="";
+            erreur_pays.innerHTML = "";
         }, 3000);
     }
 }
@@ -135,11 +141,11 @@ function paysFrontaliersFunction(event) {
     console.log(Object.values("S. Sudan"))
     if (event.key === 'Enter') {
         event.preventDefault();
-        compteur+=1;
+        compteur += 1;
         formulairePaysFrontaliers.focus();
         let nv_pays = document.getElementById('paysFront').value.trim();
 
-        if (!Object.keys(borders).includes(nv_pays)){
+        if (!Object.keys(borders).includes(nv_pays)) {
             nv_pays = capitalizeFirstLetter(nv_pays);
         }
 
@@ -158,7 +164,7 @@ function paysFrontaliersFunction(event) {
             if (borders[nv_pays].includes(pays_arriver)) {
                 let title = document.createElement('h1');
                 titleContainer.style.display = 'block';
-                let keysPays= Object.keys(borders);
+                let keysPays = Object.keys(borders);
 
 
                 // var graph = new Graph({
@@ -173,7 +179,7 @@ function paysFrontaliersFunction(event) {
 
                 let graph = new Graph(matrice);
                 let shortest = graph.findShortestPath(pays_depart, pays_arriver);
-                let coupMin = shortest.length-2;
+                let coupMin = shortest.length - 2;
                 title.textContent = `Bravo, vous avez gagné en ${compteur} coups , le chemin le plus rapide était en ${coupMin} étapes ! par exemple : ` + shortest.join("->");
                 titleContainer.appendChild(title);
 
@@ -194,7 +200,7 @@ function paysFrontaliersFunction(event) {
     }
 }
 
-function enToFr(pays){
+function enToFr(pays) {
     if (paysFr.includes(pays)) {
         let cles = Object.keys(borders);
         let indexPaysFR = paysFr.indexOf(pays);
@@ -203,7 +209,7 @@ function enToFr(pays){
     return pays;
 }
 
-function fondBlanc(event){
+function fondBlanc(event) {
     event.preventDefault()
     if (!isBlanc) {
         d3.select('svg')
@@ -217,7 +223,7 @@ function fondBlanc(event){
                 return "black";
             });
     }
-    isBlanc=!isBlanc;
+    isBlanc = !isBlanc;
 }
 
 function capitalizeFirstLetter(word) {
@@ -258,7 +264,7 @@ let Graph = (function () {
     let extractKeys = function (obj) {
         let keys = [], key;
         for (key in obj) {
-            Object.prototype.hasOwnProperty.call(obj,key) && keys.push(key);
+            Object.prototype.hasOwnProperty.call(obj, key) && keys.push(key);
         }
         return keys;
     }
@@ -267,14 +273,14 @@ let Graph = (function () {
     //////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////
     let sorter = function (a, b) {
-        return parseFloat (a) - parseFloat (b);
+        return parseFloat(a) - parseFloat(b);
     }
 
     let findPaths = function (map, start, end, infinity) {
         infinity = infinity || Infinity;
 
         let costs = {},
-            open = {'0': [start]},
+            open = { '0': [start] },
             predecessors = {},
             keys;
 
@@ -287,7 +293,7 @@ let Graph = (function () {
         costs[start] = 0;
 
         while (open) {
-            if(!(keys = extractKeys(open)).length) break;
+            if (!(keys = extractKeys(open)).length) break;
 
             keys.sort(sorter);
 
@@ -1471,12 +1477,12 @@ const borders = {
     "Yemen": ["Oman", "Saudi Arabia"],
     "Zambia": ["Angola", "Botswana", "Dem. Rep. Congo", "Malawi", "Mozambique", "Namibia", "Tanzania", "Zimbabwe"],
     "Zimbabwe": ["Botswana", "Mozambique", "South Africa", "Zambia"],
-    "W. Sahara" : ["Morocco", "Mauritania", "Algeria"]
+    "W. Sahara": ["Morocco", "Mauritania", "Algeria"]
 };
 
 
 
-const paysFr= [
+const paysFr = [
     "Afghanistan",
     "Albanie",
     "Algerie",
