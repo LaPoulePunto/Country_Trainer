@@ -18,7 +18,6 @@ let isBlanc = false;
 let joeur = document.getElementById('jouer');
 let desactiver_pays_aleatoire = document.getElementById('desactiver_pays_aleatoire');
 let compteur = 0;
-let disparitre = document.getElementsByClassName('disparaitre');
 
 erreur_pays.style.display = 'none';
 titleContainer.style.display = 'none';
@@ -93,14 +92,8 @@ function zoomed({ transform }) {
 
 
 
-
 function formPays(event) {
     event.preventDefault();
-
-    if ((carteX / carteY) < 1.3) {
-        paysForm.style.display = 'none';
-        pays_aleatoire.style.display = 'none';
-    }
 
     pays_depart = document.getElementById('pays1').value.trim();
     pays_arriver = document.getElementById('pays2').value.trim();

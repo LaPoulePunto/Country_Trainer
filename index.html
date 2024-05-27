@@ -11,25 +11,27 @@
         data-website-id="8bbbb1fd-d3bc-4841-ad41-7baa3a214448"></script>
 </head>
 
-<body>
+<body onload="getAspectRatio()">
+
+
     <div id="form-container">
         <form id="pays_aleatoire">
             <button id="desactiver_pays_aleatoire" Type="submit">Aléatoire</button>
         </form>
 
         <form id="paysForm">
-            <label for="pays1">Pays depart:</label>
+            <label id="pays1" for="pays1">Pays depart:</label>
             <input type="text" id="pays1" name="pays1" required>
             <div id="helpPays1"></div>
 
-            <label for="pays2">Pays arriver:</label>
+            <label id="pays2" for="pays2">Pays arriver:</label>
             <input type="text" id="pays2" name="pays2" required>
             <div id="helpPays2"></div>
 
             <button id="jouer" type="submit">Jouer</button>
         </form>
 
-        <form class="disparaitre">
+        <form>
             <button id="hard">Changer de mode</button>
         </form>
 
