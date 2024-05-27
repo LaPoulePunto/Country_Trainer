@@ -18,11 +18,13 @@ let isBlanc = false;
 let joeur = document.getElementById('jouer');
 let desactiver_pays_aleatoire = document.getElementById('desactiver_pays_aleatoire');
 let compteur = 0;
+let disparitre = document.getElementsByClassName('disparaitre');
+let validerTel = document.getElementById('validerTel');
 
 erreur_pays.style.display = 'none';
 titleContainer.style.display = 'none';
 formulairePaysFrontaliers.style.display = 'none';
-
+validerTel.style.display = 'none';
 
 pays_aleatoire.addEventListener("click", AleatoireFonction);
 submit_pays.addEventListener('submit', formPays);
@@ -92,6 +94,7 @@ function zoomed({ transform }) {
 
 
 
+
 function formPays(event) {
     event.preventDefault();
 
@@ -104,6 +107,12 @@ function formPays(event) {
         pays_arriver = enToFr(capitalizeFirstLetter(pays_arriver));
     }
     if (pays_depart in borders && pays_arriver in borders && !borders[pays_depart].includes(pays_arriver)) {
+        if ((carteX / carteY) < 1.3) {
+            paysForm.style.display = 'none';
+            pays_aleatoire.style.display = 'none';
+            validerTel.style.display = 'block';
+        }
+
         formulairePaysFrontaliers.style.display = 'block';
         pays_references = pays_depart;
 

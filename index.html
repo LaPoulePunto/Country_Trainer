@@ -11,41 +11,41 @@
         data-website-id="8bbbb1fd-d3bc-4841-ad41-7baa3a214448"></script>
 </head>
 
-<body onload="getAspectRatio()">
-
-
+<body>
     <div id="form-container">
         <form id="pays_aleatoire">
             <button id="desactiver_pays_aleatoire" Type="submit">Aléatoire</button>
         </form>
 
         <form id="paysForm">
-            <label id="pays1" for="pays1">Pays depart:</label>
+            <label for="pays1">Pays depart:</label>
             <input type="text" id="pays1" name="pays1" required>
             <div id="helpPays1"></div>
 
-            <label id="pays2" for="pays2">Pays arriver:</label>
+            <label for="pays2">Pays arriver:</label>
             <input type="text" id="pays2" name="pays2" required>
             <div id="helpPays2"></div>
 
             <button id="jouer" type="submit">Jouer</button>
         </form>
 
-        <form>
+        <form class="disparaitre">
             <button id="hard">Changer de mode</button>
         </form>
 
         <form id="paysFrontalier">
             <label for="paysFront">Pays :</label>
             <input type="text" id="paysFront" required>
+            <button id="validerTel">OK</button>
         </form>
 
         <button id="surrend">Rejouer</button>
-
+    </div>
+    <div id="test">
         <div id="erreur_pays"></div>
         <div id="title-container"></div>
-
     </div>
+
     <svg id="map" width="0" height="0" viewBox="0 0 0 0" class="district"></svg>
     <script src="https://d3js.org/d3.v6.min.js"></script>
     <script src="https://d3js.org/topojson.v1.min.js"></script>
